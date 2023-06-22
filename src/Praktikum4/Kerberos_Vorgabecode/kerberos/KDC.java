@@ -110,7 +110,7 @@ public class KDC extends Object {
 		Ticket srvTicket;
 		if(tgsTicket.decrypt(tgsKey)){
 			if (timeValid(tgsTicket.getStartTime(), tgsTicket.getEndTime())) {
-				if (tgsAuth.decrypt(tgsTicket.getSessionKey())) {
+				if (tgsAuth.decrypt(tgsTicket.getSessionKey())&&timeFresh(tgsAuth.getCurrentTime())&&tgsTicket.getClientName().equals(tgsAuth.getClientName())) {
 					tgsAuth.print();
 					//neues Ticket generieren mit Clientname vom tgsTicket, servername, start und end time des Tickets sowie den vorher generierten SessionKey
 					srvTicket = new Ticket(tgsTicket.getClientName(),serverName,tgsTicket.getStartTime(),tgsTicket.getEndTime(),srvSessionKey);

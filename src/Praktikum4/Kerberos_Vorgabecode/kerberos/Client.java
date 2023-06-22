@@ -26,18 +26,21 @@ public class Client extends Object {
 		this.currentUser = userName;
 
 		//TGSticket beim myKDC mit userName, myKDC name und einen Nonce wert anfordern.
-		TicketResponse ticketResponse = myKDC.requestTGSTicket(userName,myKDC.getName(),generateNonce());
+		long nonce = generateNonce();
+		TicketResponse ticketResponse = myKDC.requestTGSTicket(userName,myKDC.getName(),nonce);
 		//prüfen ob passwort stimmt
 		if (!ticketResponse.decrypt(this.generateSimpleKeyFromPassword(password))){
 			ticketResponse.printError("cannot decrypted ticketresponse with password");
 			return false;
+		}else if(nonce == ticketResponse.getNonce()){
+			ticketResponse.print();
+			this.tgsSessionKey = ticketResponse.getSessionKey();
+			this.tgsTicket = ticketResponse.getResponseTicket();
+			return true;
+		}else{
+			ticketResponse.printError("nonce is outdated");
+			return false;
 		}
-		ticketResponse.print();
-		this.tgsSessionKey = ticketResponse.getSessionKey();
-		this.tgsTicket = ticketResponse.getResponseTicket();
-
-		return true;
-
 	}
 
 	public boolean showFile(Server fileServer, String filePath) throws Exception {
@@ -50,10 +53,14 @@ public class Client extends Object {
 		authForServerTicket.encrypt(tgsSessionKey);
 
 		//Server ticket beim KDC mit tgsTicket, authServerTicket, namen vom fileserver und wieder einem nonce wert anfordern
-		TicketResponse ticketResponse = myKDC.requestServerTicket(tgsTicket,authForServerTicket,fileServer.getName(),generateNonce());
+		long nonce = generateNonce();
+		TicketResponse ticketResponse = myKDC.requestServerTicket(tgsTicket,authForServerTicket,fileServer.getName(),nonce);
 		if (!ticketResponse.decrypt(tgsSessionKey)){
 			//System.out.println("------Client----- cannot decrypt ticketResponse with Sessionkey!");
 			ticketResponse.printError("cannot decrypt ticketResponse with Sessionkey!");
+			return false;
+		}else if(!(nonce == ticketResponse.getNonce())){
+			ticketResponse.printError("nonce is outdated");
 			return false;
 		}
 		ticketResponse.print();
