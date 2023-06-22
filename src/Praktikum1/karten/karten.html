@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Konzert - Kartenbestellung</title>
+  <link href="karten.css" type="text/css" rel="stylesheet">
+  <meta http-equiv="content-type" content="text/html" charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">    
+</head>
+
+<body>
+<h1>Konzert - Kartenbestellung</h1>
+
+<div style="border-top: 1px solid; border-bottom: 1px solid">
+
+	<form name="kartenform" method="post" action="kartencode.php">
+	
+		<p>Hiermit bestelle ich <input type="text" size="2" name="Kartenanzahl"> 
+		Karten f&uuml;r das Konzert des Orchesters
+		zum Preis von 15 &euro; pro St&uuml;ck.<br><br>
+		Den gesamten Kartenpreis &uuml;berweise ich an:<br>
+		Orchester e.V.<br>
+		Sparkasse Holstein<br>
+		IBAN: DE00 0000 0000 0000 0000 00</p>
+		
+		<p>Zum Online-Zugriff auf die Karten beantrage ich einen Account mit den folgenden Zugangsdaten:</p>
+		
+		<table>
+			 <tbody>
+			 <tr>
+			 	<td>Name:</td> <td> <input type="text" size="70" name="Name"> (Benutzerkennung)</td>
+			 </tr>
+			 <tr>
+				 <td>Passwort:</td> <td><input type="password" size="70" name="Passwort"> (Buchstaben, Ziffern und Sonderzeichen sind erlaubt)</td>
+			 </tr>
+			 <tr>
+				 <td>E-Mail:</td> <td><input type="text" size="70" name="Mail"></td>
+			 </tr>
+			 </tbody>
+		</table>
+		
+		<input type="submit" value="Bestellung absenden">
+	</form>
+</div>
+
+</body>
+</html>

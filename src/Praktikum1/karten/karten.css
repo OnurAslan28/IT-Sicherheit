@@ -1,0 +1,31 @@
+body	{ 
+	background-color:#ffe844; }
+
+p, a, td, input, select, button, label, ul, ol { 	
+	font-family:verdana; }
+			
+table { 	
+	border: 0px solid black; 
+	padding: 2px; 
+	border-spacing: 15px; }
+	
+h1, h2, h5, h6 {
+	font-family:verdana; }
+	
+h1 { 
+	font-size:x-large; 
+	font-weight:bold }
+
+h2 { 
+	font-size:large; 
+	font-weight:bold }
+
+h5 { 
+	font-size:0.75rem; 
+	color: red }
+
+h6 { 
+	font-size:0.5rem; }
+
+
+
